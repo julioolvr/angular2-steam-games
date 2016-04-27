@@ -25,8 +25,6 @@ import {About} from "./components/about/about";
   {path: '/About', component: About, name: 'About'}
 ])
 export class App {
-  url: string = 'https://github.com/preboot/angular2-webpack';
-
   constructor(public api: Api) {
   }
 }
