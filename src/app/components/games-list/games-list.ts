@@ -1,27 +1,25 @@
 import {Component, OnInit} from 'angular2/core';
 
-const GAMES = [
-  { name: 'Rocket League' },
-  { name: 'Counter Strike: Global Offensive' }
-];
+import {Api} from '../../services/api/api';
 
 @Component({
   selector: 'games-list',
   template: require('./games-list.html'),
   styles: [],
-  providers: [],
+  providers: [Api],
   directives: [],
   pipes: []
 })
 export class GamesList implements OnInit {
-  public games = GAMES;
+  public games;
 
-  constructor() {
-    // Do stuff
-  }
+  constructor(private _api: Api) { }
 
   ngOnInit() {
-    console.log('Load games here?');
+    this.getGames();
   }
 
+  getGames() {
+    this._api.getGames().then(games => this.games = games);
+  }
 }
