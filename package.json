@@ -18,12 +18,15 @@
     "test-watch": "karma start --no-single-run --auto-watch",
     "ci": "npm run e2e && npm run test",
     "docs": "typedoc --options typedoc.json src/app/app.ts",
-    "start": "npm run server",
-    "postinstall": "npm run webdriver-update && typings install"
+    "start": "npm run server & npm run proxy",
+    "postinstall": "npm run webdriver-update && typings install",
+    "proxy": "node server/index.js"
   },
   "dependencies": {
     "angular2": "2.0.0-beta.15",
+    "dotenv": "^2.0.0",
     "es6-shim": "^0.35.0",
+    "got": "^6.3.0",
     "reflect-metadata": "0.1.2",
     "rxjs": "5.0.0-beta.2",
     "zone.js": "0.6.11"
