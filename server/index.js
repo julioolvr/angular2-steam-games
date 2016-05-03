@@ -15,6 +15,8 @@ http.createServer((req, res) => {
     headers: headers
   });
 
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
+
   req.on('error', e => console.log('Error making request to Steam', e));
   req.pipe(res);
 }).listen(process.env.SERVER_PORT);
