@@ -12,25 +12,13 @@ export class Api {
 
   getGames(steamId: string): Observable<Game[]> {
     return this._http
-      .get(`${this._basePath}/IPlayerService/GetOwnedGames/v0001/?steamid=${steamId}&format=json`)
+      .get(`${this._basePath}/IPlayerService/GetOwnedGames/v0001/?steamid=${steamId}&format=json&include_appinfo=1`)
       .map(this.extractData)
-      .flatMap<{appid: string}>(data => Observable.from(data.response ? data.response.games : [], x => x)) // TODO: Why do I need to map? Maybe b/c of Angular's Rx?
-      .map(gameData => gameData.appid)
-      .flatMap<Game>(gameId => this.getGame(gameId, steamId)) // TODO: Any way to fetch several games at once instead of one by one?
-      .filter(game => !!game.name) // TODO: Maybe something else can be done to get these games?
-      .reduce((games, game) => games.concat([game]), [])
+      .map(data => data.response ? data.response.games : [])
+      .map(gamesData =>
+        gamesData.map(gameData => new Game(gameData.appid, gameData.name))
+      )
       .catch(this.handleError);
-  }
-
-  getGame(gameId: string, steamId: string): Observable<Game> {
-    return this._http
-      .get(`${this._basePath}/ISteamUserStats/GetPlayerAchievements/v0001/?appid=${gameId}&steamid=${steamId}`)
-      .map(this.extractData)
-      .map(data => this.createGame(gameId, data));
-  }
-
-  createGame(gameId: string, res: any): Game {
-    return { id: gameId, name: res.playerstats.gameName };
   }
 
   extractData(res: Response) {
