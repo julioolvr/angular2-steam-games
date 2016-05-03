@@ -2,11 +2,7 @@ import {Injectable} from 'angular2/core';
 import {Http, Response} from 'angular2/http';
 import {Observable} from 'rxjs/Observable';
 
-// TODO: Move to its own model file
-interface Game {
-  id: string;
-  name: string;
-}
+import {Game} from '../../models/game/game.ts';
 
 @Injectable()
 export class Api {
