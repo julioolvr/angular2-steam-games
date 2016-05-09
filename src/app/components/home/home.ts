@@ -1,5 +1,5 @@
-import {Component, OnInit} from 'angular2/core';
-import {FORM_DIRECTIVES} from 'angular2/common';
+import { Component, OnInit } from 'angular2/core';
+import { FORM_DIRECTIVES, Control } from 'angular2/common';
 
 import {GamesList} from '../games-list/games-list';
 
@@ -11,13 +11,14 @@ import {GamesList} from '../games-list/games-list';
   template: require('./home.html')
 })
 export class Home implements OnInit {
-
-  constructor() {
-    // Do stuff
-  }
+  steamIdInput: Control = new Control('');
+  steamId: string;
 
   ngOnInit() {
-    console.log('Hello Home');
+    this.steamIdInput.valueChanges
+      .debounceTime(500)
+      .distinctUntilChanged()
+      .subscribe((steamId: string) => this.steamId = steamId)
   }
 
 }
