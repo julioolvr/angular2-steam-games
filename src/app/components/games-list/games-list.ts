@@ -1,8 +1,7 @@
-import {Component, OnInit, Input} from 'angular2/core';
+import {Component, Input} from 'angular2/core';
 
+import {Game} from '../../models/game/game';
 import {Api} from '../../services/api/api';
-
-const STEAM_ID = '76561197995010243';
 
 @Component({
   selector: 'games-list',
@@ -13,13 +12,14 @@ const STEAM_ID = '76561197995010243';
   pipes: []
 })
 export class GamesList {
-  public games;
+  public games: Array<Game>;
+  public loadingGames: boolean;
   public errorMessage: string;
 
   constructor(private _api: Api) { }
 
   @Input()
-  set steamId(value: string) { // TODO: Is this to react to changes?
+  set steamId(value: string) {
     this.getGames(value);
   }
 
@@ -28,8 +28,11 @@ export class GamesList {
       return;
     }
 
-    this._api.getGames(steamId).subscribe(
-      games => this.games = games,
-      error => this.errorMessage = error);
+    this.loadingGames = true;
+    this._api.getGames(steamId)
+      .finally(() => this.loadingGames = false)
+      .subscribe(
+        games => this.games = games,
+        error => this.errorMessage = error);
   }
 }

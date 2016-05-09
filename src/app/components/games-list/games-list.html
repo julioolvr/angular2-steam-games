@@ -1,4 +1,6 @@
 <h1>Games List</h1>
+<div *ngIf="loadingGames">Loading...</div>
+<div *ngIf="errorMessage">Error: {{errorMessage}}</div>
 <ul>
   <li *ngFor="#game of games">{{game.name}}</li>
 </ul>
