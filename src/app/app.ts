@@ -6,7 +6,6 @@ import '../style/app.scss';
 
 import {Api} from './services/api/api';
 import {Home} from './components/home/home';
-import {About} from "./components/about/about";
 
 /*
  * App Component
@@ -21,8 +20,7 @@ import {About} from "./components/about/about";
   template: require('./app.html')
 })
 @RouteConfig([
-  {path: '/', component: Home, name: 'Home'},
-  {path: '/About', component: About, name: 'About'}
+  {path: '/', component: Home, name: 'Home'}
 ])
 export class App {
   constructor(public api: Api) {
