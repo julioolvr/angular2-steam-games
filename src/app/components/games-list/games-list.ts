@@ -1,14 +1,16 @@
-import {Component, Input} from 'angular2/core';
+import { Component, Input } from 'angular2/core';
+import { MATERIAL_DIRECTIVES } from 'ng2-material/all';
 
-import {Game} from '../../models/game/game';
-import {Api} from '../../services/api/api';
+import { Game } from '../../models/game/game';
+import { Api } from '../../services/api/api';
+import { GameCard } from '../game-card/game-card';
 
 @Component({
   selector: 'games-list',
   template: require('./games-list.html'),
-  styles: [],
+  styles: [require('./games-list.scss')],
   providers: [Api],
-  directives: [],
+  directives: [GameCard, ...MATERIAL_DIRECTIVES],
   pipes: []
 })
 export class GamesList {

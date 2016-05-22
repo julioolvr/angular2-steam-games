@@ -2,6 +2,6 @@
 <div *ngIf="!steamId">Enter a steam id!</div>
 <div *ngIf="loadingGames">Loading...</div>
 <div *ngIf="errorMessage">Error: {{errorMessage}}</div>
-<ul>
-  <li *ngFor="#game of games">{{game.name}}</li>
-</ul>
+<md-content class="games-card-list">
+  <game-card *ngFor="#game of games" [game]="game"></game-card>
+</md-content>

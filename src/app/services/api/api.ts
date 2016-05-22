@@ -14,7 +14,7 @@ export class Api {
     return this.getPath(`/IPlayerService/GetOwnedGames/v0001/?steamid=${steamId}&include_appinfo=1`)
       .map(data => data.response ? data.response.games : [])
       .map(gamesData =>
-        gamesData.map(gameData => new Game(gameData.appid, gameData.name))
+        gamesData.map(gameData => new Game(gameData.appid, gameData.name, gameData.img_logo_url))
       )
       .catch(this.handleError);
   }
@@ -22,6 +22,10 @@ export class Api {
   getIdByUsername(username: string) {
     return this.getPath(`/ISteamUser/ResolveVanityURL/v0001/?vanityurl=${username}`)
       .map(data => data.response ? data.response.steamid : undefined);
+  }
+
+  getImageUrl(appid: string, filename: string): string {
+    return `http://media.steampowered.com/steamcommunity/public/images/apps/${appid}/${filename}.jpg`;
   }
 
   getPath(path: string) {
