@@ -11,14 +11,23 @@ export class Api {
   private _basePath = 'http://localhost:9000';
 
   getGames(steamId: string): Observable<Game[]> {
-    return this._http
-      .get(`${this._basePath}/IPlayerService/GetOwnedGames/v0001/?steamid=${steamId}&format=json&include_appinfo=1`)
-      .map(this.extractData)
+    return this.getPath(`/IPlayerService/GetOwnedGames/v0001/?steamid=${steamId}&include_appinfo=1`)
       .map(data => data.response ? data.response.games : [])
       .map(gamesData =>
         gamesData.map(gameData => new Game(gameData.appid, gameData.name))
       )
       .catch(this.handleError);
+  }
+
+  getIdByUsername(username: string) {
+    return this.getPath(`/ISteamUser/ResolveVanityURL/v0001/?vanityurl=${username}`)
+      .map(data => data.response.steamid);
+  }
+
+  getPath(path: string) {
+    return this._http
+      .get(`${this._basePath}${path}&format=json`)
+      .map(this.extractData);
   }
 
   extractData(res: Response) {

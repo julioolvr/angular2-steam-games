@@ -1,5 +1,2 @@
-<md-input-container>
-  <label>Enter a steam id</label>
-  <input md-input [(ngFormControl)]="steamIdInput"/>
-</md-input-container>
+<steam-user-finder (onIdChanged)="onIdChanged($event)"></steam-user-finder>
 <games-list [steamId]="steamId"></games-list>

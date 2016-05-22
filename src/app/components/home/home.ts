@@ -1,24 +1,20 @@
-import { Component, OnInit } from 'angular2/core';
-import { FORM_DIRECTIVES, Control } from 'angular2/common';
-import { MATERIAL_DIRECTIVES } from "ng2-material/all";
+import { Component } from 'angular2/core';
+import { FORM_DIRECTIVES } from 'angular2/common';
 
-import {GamesList} from '../games-list/games-list';
+import { GamesList } from '../games-list/games-list';
+import { SteamUserFinder } from '../steam-user-finder/steam-user-finder';
 
 @Component({
   selector: 'home',
-  directives: [...FORM_DIRECTIVES, GamesList, ...MATERIAL_DIRECTIVES],
+  directives: [...FORM_DIRECTIVES, GamesList, SteamUserFinder],
   pipes: [],
   styles: [require('./home.scss')],
   template: require('./home.html')
 })
-export class Home implements OnInit {
-  steamIdInput: Control = new Control('');
+export class Home {
   steamId: string;
 
-  ngOnInit() {
-    this.steamIdInput.valueChanges
-      .debounceTime(500)
-      .distinctUntilChanged()
-      .subscribe((steamId: string) => this.steamId = steamId);
+  onIdChanged(newSteamId: string) {
+    this.steamId = newSteamId;
   }
 }
