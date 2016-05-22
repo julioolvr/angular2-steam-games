@@ -16,11 +16,22 @@ export class GamesList {
   public loadingGames: boolean;
   public errorMessage: string;
 
+  private _steamId: string;
+
   constructor(private _api: Api) { }
 
   @Input()
   set steamId(value: string) {
-    this.getGames(value);
+    this._steamId = value;
+    this.games = [];
+
+    if (value) {
+      this.getGames(value);
+    }
+  }
+
+  get steamId(): string {
+    return this._steamId;
   }
 
   getGames(steamId) {

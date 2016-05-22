@@ -21,7 +21,7 @@ export class Api {
 
   getIdByUsername(username: string) {
     return this.getPath(`/ISteamUser/ResolveVanityURL/v0001/?vanityurl=${username}`)
-      .map(data => data.response.steamid);
+      .map(data => data.response ? data.response.steamid : undefined);
   }
 
   getPath(path: string) {
